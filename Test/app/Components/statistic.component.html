@@ -1,0 +1,44 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">
+        Product statistic
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <div class="alert alert-info" role="alert" *ngIf="indLoading">
+                <img src="../../Content/images/loading.gif" width="32" height="32" alt="image not found" /> Loading...
+            </div>
+            <div *ngIf="stats && stats.length==0" class="alert alert-info" role="alert">No record found!</div>
+            <table class="table table-striped" *ngIf="stats && stats.length">
+                <thead>
+                <tr>
+                    <th class="col-md-6">Type</th>
+                    <th class="col-md-6">Count</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let stat of pagedItems">
+                    <td>{{stat.Type}}</td>
+                    <td>{{stat.Count}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                    <a (click)="setPage(1)">First</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                    <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                    <a (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                    <a (click)="setPage(pager.currentPage + 1)">Next</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                    <a (click)="setPage(pager.totalPages)">Last</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

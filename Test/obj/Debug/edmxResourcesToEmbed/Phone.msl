@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище ProjectDBModelContainer" CdmEntityContainer="ProjectDBEntities">
+    <EntitySetMapping Name="Produce">
+      <EntityTypeMapping TypeName="ProjectDBModel.Produce">
+        <MappingFragment StoreEntitySet="Produce">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProduceName" ColumnName="ProduceName" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,114 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">
+        Add new product
+    </div>
+    <div class="panel-body">
+        <form class="form-inline" novalidate (ngSubmit)="addProduct(productAddFrm)" [formGroup]="productAddFrm">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="text" class="form-control" placeholder="Name" formControlName="Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="text" class="form-control" placeholder="Type" formControlName="Type">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2">
+                    <button type="submit" [disabled]="productAddFrm.invalid" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </form>
+        <div *ngIf="addMsg" role="alert" class="alert alert-info alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{addMsg}}
+        </div>
+    </div>
+</div>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Products
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <div class="alert alert-info" role="alert" *ngIf="indLoading">
+                <img src="../../Content/images/loading.gif" width="32" height="32" alt="image not found" /> Loading...
+            </div>
+            <div *ngIf="products && products.length==0" class="alert alert-info" role="alert">No record found!</div>
+            <table class="table table-striped" *ngIf="products && products.length">
+                <thead>
+                    <tr>
+                        <th class="col-md-4">Name</th>
+                        <th class="col-md-4">Type</th>
+                        <th class="col-md-4"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let product of pagedItems">
+                    <td>{{product.Name}}</td>
+                    <td>{{product.Type}}</td>
+                    <td>
+                        <button title="Edit" class="btn btn-primary" (click)="editProduct(product.Id)">Edit</button>
+                        <button title="Delete" class="btn btn-danger" (click)="deleteProduct(product.Id)">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                    <a (click)="setPage(1)">First</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                    <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                    <a (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                    <a (click)="setPage(pager.currentPage + 1)">Next</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                    <a (click)="setPage(pager.totalPages)">Last</a>
+                </li>
+            </ul>
+            <div>
+            </div>
+        </div>
+        <div *ngIf="msg" role="alert" class="alert alert-info alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{msg}}
+        </div>
+    </div>
+</div>
+
+<modal #modal>
+    <form novalidate (ngSubmit)="onSubmit(productFrm)" [formGroup]="productFrm">
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">{{modalTitle}}</h4>
+        </modal-header>
+        <modal-body>
+            <div class="form-group">
+                <div>
+                    <span>Name</span>
+                    <input type="text" class="form-control" placeholder="Name" formControlName="Name">
+                </div>
+                <div>
+                    <span>Type</span>
+                    <input type="text" class="form-control" placeholder="Type" formControlName="Type">
+                </div>
+            </div>
+        </modal-body>
+        <modal-footer>
+            <div>
+                <a class="btn btn-default" (click)="modal.dismiss()">Cancel</a>
+                <button type="submit" [disabled]="productFrm.invalid" class="btn btn-primary">{{modalBtnTitle}}</button>
+            </div>
+        </modal-footer>
+    </form>
+</modal>
